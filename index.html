@@ -1,96 +1,878 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yureon Labs</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      background: #0f172a;
-      color: #e2e8f0;
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 60px 20px;
-    }
-    h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-    h2 {
-      margin-top: 40px;
-      color: #94a3b8;
-      font-weight: normal;
-    }
-    p {
-      font-size: 18px;
-      color: #cbd5f5;
-    }
-    ul {
-      margin-top: 10px;
-    }
-    li {
-      margin-bottom: 8px;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 22px;
-      background: #3b82f6;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-    .button:hover {
-      background: #2563eb;
-    }
-    .footer {
-      margin-top: 60px;
-      font-size: 14px;
-      color: #64748b;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yureon Labs — Customer Support AI Agents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080a0f;
+    --bg2: #0e1118;
+    --bg3: #141824;
+    --accent: #4af0b0;
+    --accent2: #3dd4f5;
+    --text: #eef0f5;
+    --muted: #7a8099;
+    --border: rgba(255,255,255,0.07);
+    --glow: rgba(74, 240, 176, 0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .nav-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: rgba(8, 10, 15, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .logo-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #080a0f;
+  }
+  
+
+  
+  
+  .nav-cta {
+    background: var(--accent);
+    color: #080a0f;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(74,240,176,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,240,176,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,240,176,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(74,240,176,0.08);
+    border: 1px solid rgba(74,240,176,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .h1-gradient {
+    background: linear-gradient(90deg, var(--accent), var(--accent2), #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #080a0f;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+  /* STAT BAR */
+  .stats {
+    padding: 1.5rem 3rem;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2rem;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-body {
+    color: var(--muted);
+    max-width: 520px;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    margin-top: 4rem;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .step {
+    background: var(--bg2);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .step:hover { background: var(--bg3); }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: rgba(74,240,176,0.12);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .step p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(74,240,176,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .feature-card:hover { border-color: rgba(74,240,176,0.2); transform: translateY(-2px); }
+  .feature-card:hover::before { opacity: 1; }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(74,240,176,0.08);
+    border: 1px solid rgba(74,240,176,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 20px;
+  }
+
+  .feature-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-card p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* TERMINAL DEMO */
+  .demo-wrap {
+    margin-top: 3rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .terminal-bar {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-red { background: #ff5f57; }
+  .t-yellow { background: #febc2e; }
+  .t-green { background: #28c840; }
+
+  .terminal-label {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .chat-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .msg {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .msg-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .msg-user .msg-avatar { background: rgba(255,255,255,0.1); color: var(--text); }
+  .msg-ai .msg-avatar { background: rgba(74,240,176,0.15); color: var(--accent); }
+  .msg-ai { }
+
+  .msg-bubble {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  .msg-ai .msg-bubble {
+    border-color: rgba(74,240,176,0.15);
+  }
+
+  .msg-time { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+  .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1.4s infinite; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 60%, 100% { opacity: 0.2; }
+    30% { opacity: 1; }
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(74,240,176,0.08);
+    color: var(--accent);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(74,240,176,0.15);
+    margin-top: 8px;
+    margin-right: 4px;
+    font-weight: 500;
+  }
+
+  /* FOUNDER */
+  .founder-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .founder-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .founder-avatar {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(74,240,176,0.2), rgba(61,212,245,0.2));
+    border: 2px solid rgba(74,240,176,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    position: relative;
+  }
+
+  .founder-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(74,240,176,0.1);
+  }
+
+  blockquote {
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  blockquote::before {
+    content: '"';
+    font-family: 'Syne', sans-serif;
+    font-size: 6rem;
+    color: var(--accent);
+    opacity: 0.2;
+    line-height: 0;
+    position: absolute;
+    top: 2rem; left: -1rem;
+  }
+
+  .founder-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .founder-role { color: var(--muted); font-size: 0.9rem; }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 7rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(74,240,176,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title { margin-bottom: 1.5rem; }
+  .cta-section .section-body { margin: 0 auto 2.5rem; max-width: 440px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p { color: var(--muted); font-size: 13px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .stats { gap: 2rem; padding: 1.5rem; }
+    .stat-divider { display: none; }
+    .founder-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .founder-avatar { width: 120px; height: 120px; font-size: 2.5rem; }
+    footer { flex-direction: column; align-items: center; text-align: center; }
+  }
+</style>
 </head>
 <body>
-  <div class="container">
 
-```
-<h1>Yureon Labs</h1>
-<p>We help companies book more qualified meetings with cold outreach.</p>
-
-<h2>What we do</h2>
-<p>
-  We build and manage cold email systems that generate replies, conversations, and sales opportunities — without you hiring an internal team.
-</p>
-
-<h2>Who this is for</h2>
-<ul>
-  <li>B2B companies</li>
-  <li>Agencies & service businesses</li>
-  <li>Founders who want predictable pipeline</li>
-</ul>
-
-<h2>Our process</h2>
-<ul>
-  <li>Lead sourcing</li>
-  <li>Email infrastructure setup</li>
-  <li>Copywriting & personalization</li>
-  <li>Campaign optimization</li>
-</ul>
-
-<a href="#" class="button">Book a Call</a>
-
-<div class="footer">
-  Or email: hello@yureonlabs.com
-</div>
-```
-
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+  <a href="#" class="logo">
+    <div class="logo-mark">Y</div>
+    Yureon Labs
+  </a>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
   </div>
+</nav>
+
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      AI Agents for Customer Support
+    </div>
+
+    <h1>
+      Support that never<br>
+      <span class="h1-gradient">sleeps, scales, or slips.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Yureon Labs builds intelligent AI agents that handle your customer support—faster, smarter, and 24/7. Trusted by teams across industries.
+    </p>
+
+    <div class="hero-ctas">
+		<a href="#contact" class="btn-primary">
+      Start a Project
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#how" class="btn-ghost">See How It Works</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- STATS BAR -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">20+</div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Always On</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-num">&lt;1s</div>
+    <div class="stat-label">Response Time</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">Parallel Conversations</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="fade-in">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">From kickoff to<br>live agent — fast.</h2>
+    <p class="section-body">We handle everything. You get a support agent that knows your product inside out and talks to your customers like a pro.</p>
+  </div>
+
+  <div class="steps fade-in">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Discovery Call</h3>
+      <p>We learn your product, your tone, your edge cases. No templates — every agent is purpose-built.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Agent Training</h3>
+      <p>We feed the agent your docs, FAQs, and workflows. It learns your business like your best rep would.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Integration</h3>
+      <p>We plug into your stack — Intercom, Zendesk, Slack, custom API. Smooth, no disruption.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Live & Improving</h3>
+      <p>The agent goes live. We monitor, iterate, and improve with every conversation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section id="demo" style="padding-top: 0;">
+  <div class="fade-in">
+    <div class="section-label">In Action</div>
+    <h2 class="section-title">Watch the agent work.</h2>
+    <p class="section-body">Real conversations, instant answers. Your customers never wait. Your team never burns out.</p>
+  </div>
+
+  <div class="demo-wrap fade-in">
+    <div class="terminal-bar">
+      <div class="t-dot t-red"></div>
+      <div class="t-dot t-yellow"></div>
+      <div class="t-dot t-green"></div>
+      <div class="terminal-label">YUREON SUPPORT AGENT — LIVE</div>
+    </div>
+    <div class="chat-body">
+      <div class="msg msg-user">
+        <div class="msg-avatar">U</div>
+        <div>
+          <div class="msg-bubble">Hey, I was charged twice for my subscription this month. Can you help?</div>
+          <div class="msg-time">2:14 PM</div>
+        </div>
+      </div>
+      <div class="msg msg-ai">
+        <div class="msg-avatar">AI</div>
+        <div>
+          <div class="msg-bubble">
+            Hi! I'm really sorry about that — let me look into this right away.<br><br>
+            I can see a duplicate charge on <strong>Nov 12</strong> for $49.00. I've already flagged this for a full refund. You'll see it back in your account within <strong>3–5 business days</strong>.<br><br>
+            Want me to also email you a confirmation of the refund?
+            <div>
+              <span class="tag">✓ Refund Initiated</span>
+              <span class="tag">Account Verified</span>
+            </div>
+          </div>
+          <div class="msg-time">2:14 PM · resolved in 0.8s</div>
+        </div>
+      </div>
+      <div class="msg msg-user">
+        <div class="msg-avatar">U</div>
+        <div>
+          <div class="msg-bubble">Yes please, and can you also upgrade my plan?</div>
+          <div class="msg-time">2:15 PM</div>
+        </div>
+      </div>
+      <div class="msg msg-ai">
+        <div class="msg-avatar">AI</div>
+        <div>
+          <div class="msg-bubble">
+            <div class="typing-indicator">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="padding-top: 2rem;">
+  <div class="fade-in">
+    <div class="section-label">Capabilities</div>
+    <h2 class="section-title">Built for real<br>support workloads.</h2>
+  </div>
+
+  <div class="features-grid fade-in">
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>Knows Your Product</h3>
+      <p>Trained on your docs, policies, and edge cases. Answers like your best rep, every time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Sub-Second Responses</h3>
+      <p>No queues, no wait times. Customers get answers instantly, at any volume.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>Deep Integrations</h3>
+      <p>Connects to CRMs, ticketing systems, payment platforms, and your internal tools.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Multilingual</h3>
+      <p>Speaks your customers' language — over 50 languages supported natively.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Analytics & Insights</h3>
+      <p>Real-time dashboards showing resolution rates, sentiment, and top issues.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <h3>Graceful Escalation</h3>
+      <p>Knows when to hand off to a human — with full context, no friction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<div class="founder-section">
+  <div class="founder-inner fade-in">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+      <div class="founder-avatar">VG</div>
+      <div style="text-align:center;">
+        <div class="founder-name">Victor Grey</div>
+        <div class="founder-role">Founder, Yureon Labs</div>
+      </div>
+    </div>
+    <div>
+      <blockquote>
+        We started Yureon Labs because we kept seeing the same problem — great companies losing customers to slow, robotic support. We fix that. Every agent we build feels genuinely human, moves at machine speed, and gets smarter every day.
+      </blockquote>
+      <p style="color: var(--muted); font-size: 0.9rem; font-weight: 300;">
+        With 20+ successful deployments across SaaS, e-commerce, and fintech — we know what it takes to make AI support that customers actually appreciate.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div style="position: relative;">
+    <div class="section-label" style="text-align: center;">Let's Build Together</div>
+    <h2 class="section-title fade-in">Ready to transform<br>your support?</h2>
+    <p class="section-body fade-in">Join 20+ teams who've already shipped AI support that their customers love. Let's talk about what we can build for you.</p>
+    <div class="fade-in">
+      <a href="mailto:voicu@yureonlabs.com" class="btn-primary" style="font-size: 1rem; padding: 1rem 2.5rem;">
+        Book a Free Call
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <p style="margin-top: 1.25rem; color: var(--muted); font-size: 0.88rem;">or reach out directly at <a href="mailto:voicu@yureonlabs.com" style="color: var(--accent); text-decoration: none;">voicu@yureonlabs.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo" style="font-size: 1rem;">
+    <div class="logo-mark" style="width:26px;height:26px;font-size:12px;">Y</div>
+    Yureon Labs
+  </a>
+  <p>© 2025 Yureon Labs. All rights reserved.</p>
+  <p>Built by <a href="#" style="color: var(--accent); text-decoration: none;">Victor Grey</a></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
